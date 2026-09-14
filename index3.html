@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client-Side Image View</title>
+    <style>
+        #imagePreview { margin-top: 5px; width: 300px; display: block; height: 300px; outline: 5px solid black}
+    </style>
+</head>
+<body>
+
+    <h2>Select and View Image</h2>
+    
+    <input type="file" id="imageInput" accept="image/*">
+
+    <div class="preview-container">
+        <img id="imagePreview" >
+    </div>
+
+    <script>
+        const imageInput = document.getElementById('imageInput');
+        const imagePreview = document.getElementById('imagePreview');
+
+        imageInput.addEventListener('change', function() {
+            const file = imageInput.files[0]; 
+
+            if (file) {
+                const objectUrl = URL.createObjectURL(file);
+
+                imagePreview.src = objectUrl;
+                imagePreview.style.display = 'block';
+
+                imagePreview.onload = () => {
+                    URL.revokeObjectURL(objectUrl);
+                };
+            }
+        });
+    </script>
+
+</body>
+</html>
